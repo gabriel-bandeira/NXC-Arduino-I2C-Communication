@@ -1,0 +1,63 @@
+
+/*
+Author: Gabriel Bandeira (gmb@cin.ufpe.br)
+github: gabriel-bandeira
+*/
+
+/**
+NXT Wires:
+1 [Branco] 	 -
+2 [Preto] 	 -GND
+3 [Vermelho] 	 -GND
+4 [Verde] 	 -5V
+5 [Amarelo] 	 -SCL
+6 [Azul] 		 -SDA
+*/
+
+task main()
+{
+   SetSensorLowspeed(S4);
+   
+   int count = 1;
+   byte inbuf[] = {0x18 << 1, 0};
+   byte outbuf[1];
+   
+   while(1)
+   {
+	if(ButtonState(BTNCENTER))
+	{
+	  while(ButtonState(BTNCENTER));
+	  inbuf[1] = 0x10;
+	  I2CBytes(S4, inbuf, count, outbuf);
+	  
+	  if(outbuf[0])
+	     TextOut(20, LCD_LINE2, "Sent", true);
+	  else
+	     TextOut(20, LCD_LINE2, "Fail", true);
+	}
+	if(ButtonState(BTNRIGHT))
+	{
+       while(ButtonState(BTNRIGHT));
+	  inbuf[1] = 0x11;
+	  I2CBytes(S4, inbuf, count, outbuf);
+
+	  if(outbuf[0])
+	     TextOut(20, LCD_LINE2, "Sent", true);
+	  else
+	     TextOut(20, LCD_LINE2, "Fail", true);
+	}
+	if(ButtonState(BTNLEFT))
+	{
+       while(ButtonState(BTNLEFT));
+	  inbuf[1] = 0x12;
+	  I2CBytes(S4, inbuf, count, outbuf);
+
+	  if(outbuf[0])
+	     TextOut(20, LCD_LINE2, "Sent", true);
+	  else
+	     TextOut(20, LCD_LINE2, "Fail", true);
+	}
+   }
+
+}
+
